@@ -1,0 +1,26 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public # Laravel usa la carpeta public como raíz
+    networks:
+      - app-network
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: nombre_base_datos
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contraseña
+      MYSQL_ROOT_PASSWORD: root_password
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
